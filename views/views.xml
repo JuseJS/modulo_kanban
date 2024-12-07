@@ -1,0 +1,110 @@
+<odoo>
+    <data>
+        <!-- Vista Formulario -->
+        <record model="ir.ui.view" id="lista_tareas2.form">
+            <field name="name">lista_tareas2 form</field>
+            <field name="model">lista_tareas2.lista_tareas2</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="tarea"/>
+                            <field name="prioridad"/>
+                            <field name="urgente" readonly="1"/>
+                            <field name="realizada"/>
+                            <field name="fecha_asignada"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista Tree -->
+        <record model="ir.ui.view" id="lista_tareas2.tree">
+            <field name="name">lista_tareas2 tree</field>
+            <field name="model">lista_tareas2.lista_tareas2</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="tarea"/>
+                    <field name="prioridad"/>
+                    <field name="urgente"/>
+                    <field name="realizada"/>
+                    <field name="fecha_asignada"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista Kanban -->
+        <record model="ir.ui.view" id="lista_tareas2.kanban">
+            <field name="name">lista_tareas2 kanban</field>
+            <field name="model">lista_tareas2.lista_tareas2</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="tarea"/>
+                    <field name="prioridad"/>
+                    <field name="urgente"/>
+                    <field name="realizada"/>
+                    <field name="fecha_asignada"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card">
+                                <div class="oe_kanban_body">
+                                    <strong><field name="tarea"/></strong>
+                                    <div>Prioridad: <field name="prioridad"/></div>
+                                    <div>Urgente: <field name="urgente"/></div>
+                                    <div>Realizada: <field name="realizada"/></div>
+                                    <div>Fecha Asignada: <field name="fecha_asignada"/></div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Vista Calendario -->
+        <record model="ir.ui.view" id="lista_tareas2.calendar">
+            <field name="name">lista_tareas2 calendar</field>
+            <field name="model">lista_tareas2.lista_tareas2</field>
+            <field name="arch" type="xml">
+                <calendar string="Tareas" date_start="fecha_asignada">
+                    <field name="tarea"/>
+                </calendar>
+            </field>
+        </record>
+
+        <!-- Acciones Menú -->
+        <record model="ir.actions.act_window" id="lista_tareas2.action_main">
+            <field name="name">Tareas</field>
+            <field name="res_model">lista_tareas2.lista_tareas2</field>
+            <!-- Se incluyen tree y form para permitir creación/edición -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="lista_tareas2.tree"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="lista_tareas2.action_kanban">
+            <field name="name">Tareas en Kanban</field>
+            <field name="res_model">lista_tareas2.lista_tareas2</field>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="lista_tareas2.kanban"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="lista_tareas2.action_calendar">
+            <field name="name">Calendario de Tareas</field>
+            <field name="res_model">lista_tareas2.lista_tareas2</field>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="lista_tareas2.calendar"/>
+        </record>
+
+        <!-- Menú principal -->
+        <menuitem name="Lista de Tareas" id="lista_tareas2.menu_root"/>
+
+        <!-- Submenú de opciones -->
+        <menuitem name="Opciones Lista Tareas" id="lista_tareas2.menu_1" parent="lista_tareas2.menu_root"/>
+
+        <!-- Opciones de vista -->
+        <menuitem name="Listado de Tareas" id="lista_tareas2.menu_1_tareas" parent="lista_tareas2.menu_1" action="lista_tareas2.action_main"/>
+        <menuitem name="Lista Kanban" id="lista_tareas2.menu_1_kanban" parent="lista_tareas2.menu_1" action="lista_tareas2.action_kanban"/>
+        <menuitem name="Calendario de Tareas" id="lista_tareas2.menu_1_calendar" parent="lista_tareas2.menu_1" action="lista_tareas2.action_calendar"/>
+    </data>
+</odoo>
